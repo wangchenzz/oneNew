@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 @class rilegouleView;
 
-//typedef void(^myBlock)(NSInteger);
-
 @interface EveryDayTableViewController : UITableViewController
 
-//@property (nonatomic, copy) myBlock block;
+/**
+ *  masaka 这是主视图控制器, 最重要的/./
+ */
 
 @property (nonatomic, strong) rilegouleView *rilegoule;
 

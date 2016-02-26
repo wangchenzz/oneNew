@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
+/**
+ 这个没有使用
+ 
+ - returns: <#return value description#>
+ */
 @interface BlurImageView : UIImageView
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

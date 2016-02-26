@@ -40,7 +40,6 @@
         _label.font = [UIFont systemFontOfSize:14];
         
         [self addSubview:_label];
-        
     }
     return self;
 }

@@ -11,6 +11,13 @@
 @class ContentScrollView;
 @protocol ContentScrollViewDelegate <UIScrollViewDelegate>
 
+/**
+ *  2个代理. 一个用来进行点击的回调 一个用来进行关闭的回调;
+ *
+ *  @param scroll ...
+ *  @param index  ..
+ */
+
 - (void)headerScroll:(ContentScrollView *)scroll didSelectItemAtIndex:(NSInteger)index;
 - (void)headerScroll:(ContentScrollView *)scroll didClose:(BOOL)close;
 

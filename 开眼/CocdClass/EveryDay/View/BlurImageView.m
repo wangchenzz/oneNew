@@ -6,6 +6,13 @@
 //  Copyright (c) 2015年 漫步人生路. All rights reserved.
 //
 
+
+
+/**
+ 这个类根本就没有使用.. 坑人,
+ 
+ - returns: 坑
+ */
 #import "BlurImageView.h"
 
 @implementation BlurImageView
@@ -16,7 +23,7 @@
     if (self) {
         self.userInteractionEnabled = YES;
         //设置图片
-        self.image = [UIImage imageNamed:@"11471923,2560,1600.jpg"];
+        self.image = [UIImage imageNamed:@""];
         //创建模糊视图
         UIVisualEffectView *backVisual = [[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
         //将模糊视图的大小等同于自身

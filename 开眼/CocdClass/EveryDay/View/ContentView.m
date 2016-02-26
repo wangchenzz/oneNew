@@ -20,12 +20,12 @@
         self.contentMode = UIViewContentModeScaleAspectFill;
         self.clipsToBounds = YES;
 
-        _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imageView = [[BlurImageView alloc] initWithFrame:self.bounds];
 
         [self addSubview:_imageView];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         
-        _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, kWidth, 30)];
+        _titleLabel = [[animationFlashLabel alloc]initWithFrame:CGRectMake(5, 5, kWidth, 30)];
         _titleLabel.font = [UIFont boldSystemFontOfSize:16];
         _titleLabel.textColor = collor;
         [self addSubview:_titleLabel];
@@ -34,13 +34,13 @@
         _lineView.backgroundColor = collor;
         [self addSubview:_lineView];
         
-        _littleLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 46, kWidth, 20)];
+        _littleLabel = [[animationFlashLabel alloc]initWithFrame:CGRectMake(5, 46, kWidth, 20)];
         _littleLabel.textColor = collor;
         _littleLabel.font = [UIFont systemFontOfSize:14];
 //        _littleLabel.backgroundColor = [UIColor redColor];
         [self addSubview:_littleLabel];
         
-        _descripLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 80, kWidth - 10, 90)];
+        _descripLabel = [[animationFlashLabel alloc]initWithFrame:CGRectMake(5, 80, kWidth - 10, 90)];
         _descripLabel.font = [UIFont systemFontOfSize:14];
 //        _descripLabel.backgroundColor = [UIColor redColor];
         _descripLabel.numberOfLines = 0;
@@ -58,35 +58,57 @@
         _replyCustom = [[CustomView alloc]initWithFrame:CGRectMake(_cacheCustom.frame.origin.x + _cacheCustom.frame.size.width, y, (kWidth - 10) / 4, 30) Width:width LabelString:model.replyCount collor:collor];
         [self addSubview:_replyCustom];
 
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:model.coverForDetail]];
+//        [_imageView sd_setImageWithURL:[NSURL URLWithString:model.coverForDetail]];
 
+        
+        CGRect pageviewrect = CGRectMake(0, self.frame.size.height - 102, self.frame.size.width, 38);
+        self.pageview = [[pageView alloc] initWithFrame:pageviewrect];
+        
+        self.pageview.numberOfPages = 5;
+        
+        [self addSubview:self.pageview];
+        
         [self setData:model];
+        
     }
     return self;
 }
 
 - (void)setData:(EveryDayModel *)model {
 
-    self.titleLabel.text = model.title;
-    self.descripLabel.text = model.descrip;
+    self.titleLabel.willShowText = model.title;
+    self.descripLabel.willShowText = model.descrip;
     [self.shareCustom setTitle:model.shareCount];
+    
     [self.replyCustom setTitle:model.replyCount];
     [self.collectionCustom setTitle:model.collectionCount];
+    
+    self.descripLabel.verticalAlignment = VerticalAlignmentTop;
 
     NSInteger time = [model.duration integerValue];
     NSString *timeString = [NSString stringWithFormat:@"%02ld'%02ld''",time/60,time% 60];//显示的是音乐的总时间
     NSString *string = [NSString stringWithFormat:@"#%@ / %@",model.category, timeString];
-    self.littleLabel.text = string;
+    self.littleLabel.willShowText = string;
 
+    
+    
+    
 
     __weak typeof(self) weakSelf = self;
 
 //    [self.imageView sd_setImageWithURL:[NSURL URLWithString:model.coverBlurred]];
 
+    [self.titleLabel showAnimation:1.0f completion:nil];
+    [self.littleLabel showAnimation:1.0f completion:nil];
+    [self.descripLabel showAnimation:1.0f completion:nil];
+    
+    
     [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:model.coverBlurred] options:(SDWebImageRetryFailed) progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
 
+        
+#warning  - - animation;   这就是最弱的,
+        
         if (image) {
-            
             CABasicAnimation *contentsAnimation = [CABasicAnimation animationWithKeyPath:@"contents"];
             contentsAnimation.duration = 1.0f;
             contentsAnimation.fromValue = self.imageView.image ;
@@ -95,20 +117,25 @@
             contentsAnimation.removedOnCompletion = YES;
             contentsAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
             [weakSelf.imageView.layer addAnimation:contentsAnimation forKey:nil];
+            
+            
 
-            weakSelf.imageView.image = image;
-
+            _imageView.image = image;
+            
+            [_imageView setBackgroundColor:[UIColor redColor]];
+            
         }
 
     }];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+-(void)setCurrentIndex:(NSInteger)currentIndex{
+
+    _currentIndex = currentIndex;
+    
+    self.pageview.currentPage = _currentIndex;
+
+
 }
-*/
 
 @end

@@ -10,6 +10,11 @@
 @class ContentView;
 @class EveryDayModel;
 
+
+/**
+ *  scorview 上的图图;
+ */
+
 @interface ImageContentView : UIView
 
 //@property (nonatomic, strong) ContentView *contentView;

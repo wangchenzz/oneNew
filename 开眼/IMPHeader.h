@@ -12,5 +12,4 @@
 #import "LORequestManger.h"
 #import "UIImageView+AFNetworking.h"
 #import "BlurImageView.h"
-#import "PlayViewController.h"
 #endif /* IMPHeader_h */

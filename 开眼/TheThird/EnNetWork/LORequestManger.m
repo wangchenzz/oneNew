@@ -118,7 +118,6 @@
 
 - (void)downloadWithSongUrl:(NSString *)songUrl
 {
-    NSURL *url = [NSURL URLWithString:songUrl];
 //    NSMutableURLRequest *request = [NSMutableURLRequest ]
 }
 @end

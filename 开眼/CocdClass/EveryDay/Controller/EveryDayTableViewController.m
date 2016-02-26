@@ -14,6 +14,13 @@
 #import "rilegouleView.h"
 #import "CustomView.h"
 #import "ImageContentView.h"
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+
+#import "PlayVedioViewController.h"
+
+
+#import <AVKit/AVKit.h>
 
 @interface SDWebImageManager  (cache)
 
@@ -141,7 +148,7 @@
     [self jsonSelection];
     
     [self.tableView registerClass:[EveryDayTableViewCell class] forCellReuseIdentifier:@"哈哈"];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorStyle = NO;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -210,21 +217,21 @@
 
     EveryDayModel *model = self.selectDic[self.dateArray[indexPath.section]][indexPath.row];
 
-    if (![[SDWebImageManager sharedManager] memoryCachedImageExistsForURL:[NSURL URLWithString:model.coverForDetail]]) {
+   if (![[SDWebImageManager sharedManager] memoryCachedImageExistsForURL:[NSURL URLWithString:model.coverForDetail]]) {
 
         CATransform3D rotation;//3D旋转
 
         rotation = CATransform3DMakeTranslation(0 ,50 ,20);
-//        rotation = CATransform3DMakeRotation( M_PI_4 , 0.0, 0.7, 0.4);
+        //rotation = CATransform3DMakeRotation( M_PI_4 , 0.0, 0.7, 0.4);
         //逆时针旋转
 
         rotation = CATransform3DScale(rotation, 0.9, .9, 1);
 
-        rotation.m34 = 1.0/ -600;
+        rotation.m34 = 1.0/ -800;
 
         cell.layer.shadowColor = [[UIColor blackColor]CGColor];
         cell.layer.shadowOffset = CGSizeMake(10, 10);
-        cell.alpha = 0;
+//        cell.alpha = 0;
 
         cell.layer.transform = rotation;
 
@@ -235,7 +242,24 @@
         cell.alpha = 1;
         cell.layer.shadowOffset = CGSizeMake(0, 0);
         [UIView commitAnimations];
-    }
+  }
+//    CATransform3D roatio;
+//    
+//    roatio = CATransform3DMakeScale(3, 3, 3);
+//    
+//    roatio.m22 = 2;
+//    
+//    cell.layer.transform = roatio;
+//    
+//    [UIView beginAnimations:@"roatio" context:NULL];
+//    
+//    [UIView setAnimationDuration:1];
+//    
+//    cell.layer.transform = CATransform3DIdentity;
+//    
+//    [UIView commitAnimations];
+    
+    
 
     [cell cellOffset];
     cell.model = model;
@@ -254,21 +278,28 @@
 - (void)showImageAtIndexPath:(NSIndexPath *)indexPath{
 
     _array = _selectDic[_dateArray[indexPath.section]];
+    
     _currentIndexPath = indexPath;
 
     EveryDayTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
     CGRect rect = [cell convertRect:cell.bounds toView:nil];
+    
     CGFloat y = rect.origin.y;
 
     _rilegoule = [[rilegouleView alloc] initWithFrame:CGRectMake(0, 0, kWidth, kHeight) imageArray:_array index:indexPath.row];
+    
     _rilegoule.offsetY = y;
+    
     _rilegoule.animationTrans = cell.picture.transform;
+    
     _rilegoule.animationView.picture.image = cell.picture.image;
 
     _rilegoule.scrollView.delegate = self;
     
     [[self.tableView superview] addSubview:_rilegoule];
     //添加轻扫手势
+    
     UISwipeGestureRecognizer *Swipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(panAction:)];
     
     _rilegoule.contentView.userInteractionEnabled = YES;
@@ -278,7 +309,9 @@
     [_rilegoule.contentView addGestureRecognizer:Swipe];
     
     //添加点击播放手势
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction)];
+    
     [_rilegoule.scrollView addGestureRecognizer:tap];
 
     [_rilegoule aminmationShow];
@@ -333,6 +366,8 @@
         int index = floor((_rilegoule.scrollView.contentOffset.x - scrollView.frame.size.width / 2) / scrollView.frame.size.width) + 1;
 
         _rilegoule.scrollView.currentIndex = index;
+        
+        _rilegoule.currentIndex = index;
 
         self.currentIndexPath = [NSIndexPath indexPathForRow:index inSection:self.currentIndexPath.section];
 
@@ -370,14 +405,13 @@
 
 - (void)tapAction{
     
-    PlayViewController *playVC = [[PlayViewController alloc]init];
+    EveryDayModel *model = _array[self.currentIndexPath.row];
     
-    playVC.modelArray = _array;
+    PlayVedioViewController *cotrol = [[PlayVedioViewController alloc] init];
     
-    playVC.index = self.currentIndexPath.row;
+    cotrol.url = model.playUrl;
     
-//    [self.navigationController pushViewController:playVC animated:YES];
-    [self presentViewController:playVC animated:YES completion:nil];
+    [self presentViewController:cotrol animated:YES completion:nil];
 }
 
 @end

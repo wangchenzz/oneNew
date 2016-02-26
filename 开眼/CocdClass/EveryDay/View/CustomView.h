@@ -10,6 +10,10 @@
 
 @interface CustomView : UIView
 
+/**
+ *  自定义 view  用来制作 scrollview 下面的按钮-'/
+ */
+
 @property (nonatomic, strong) UIButton *button;
 
 @property (nonatomic, strong) UILabel *label;

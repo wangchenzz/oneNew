@@ -17,6 +17,16 @@
 @end
 @implementation ContentScrollView
 
+/**
+ *  初始化方法
+ *
+ *  @param frame      位置
+ *  @param imageArray 数据源存放的数组
+ *  @param index      当前显示的index
+ *
+ *  @return scrollview
+ */
+
 - (instancetype)initWithFrame:(CGRect)frame imageArray:(NSArray *)imageArray index:(NSInteger)index{
     
     self = [super initWithFrame:frame];
@@ -40,6 +50,8 @@
             model = imageArray[i];
             
             [sonView.picture sd_setImageWithURL:[NSURL URLWithString:model.coverForDetail] placeholderImage:nil];
+            
+            
             
             [self addSubview:sonView];;
         }

@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ *  数据模型.存放数据源
+ */
+
 @interface EveryDayModel : NSObject
 
 @property (nonatomic, strong) NSString *category;

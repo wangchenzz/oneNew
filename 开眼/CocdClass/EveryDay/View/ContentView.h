@@ -9,16 +9,31 @@
 #import <UIKit/UIKit.h>
 @class CustomView;
 @class EveryDayModel;
+#import "animationFlashLabel.h"
+
+#import "pageView.h"
+
 @interface ContentView : UIView
+/**
+ *  明显就是 scrollview 下面用来介绍的一块 view
+ */
 
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) BlurImageView *imageView;
 
-@property (nonatomic, strong) UILabel *littleLabel;
+@property (nonatomic, strong) animationFlashLabel *titleLabel;
 
-@property (nonatomic, strong) UILabel *descripLabel;
+@property (nonatomic, strong) animationFlashLabel *littleLabel;
+
+@property (nonatomic, strong) animationFlashLabel *descripLabel;
 
 @property (nonatomic, strong) UIView *lineView;
+
+/**
+ *  zz
+ */
+@property (nonatomic,retain) pageView *pageview;
+
+@property (nonatomic,assign) NSInteger currentIndex;
 
 @property (nonatomic, strong) CustomView *collectionCustom;
 

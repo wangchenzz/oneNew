@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 @class EveryDayModel;
 
+
+/**
+ *  /cell 类., view 类
+ */
+
 @interface EveryDayTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *picture;

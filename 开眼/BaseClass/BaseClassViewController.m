@@ -24,7 +24,12 @@
     
     naVC.navigationBar.translucent = NO;
     
+//    naVC.navigationBar.hidden = YES;
+    
     [self addChildViewController:naVC];
+    
+    UITabBarController *tab = [[UITabBarController alloc] init];
+    [tab addChildViewController:self];
     [self.view addSubview:naVC.view];
     
     
